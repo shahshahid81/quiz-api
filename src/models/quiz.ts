@@ -1,4 +1,3 @@
-import { KeyValue } from '../types/common';
 import { ErrorEnum } from '../types/enums';
 import { CreateQuizPayload } from '../types/quiz';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,8 +6,8 @@ type QuizData = {
 	id: string;
 	title: string;
 	questions: {
-		question: KeyValue<string, string>;
-		options: KeyValue<string, string>[];
+		question: string;
+		options: string[];
 		answer: string;
 	}[];
 };

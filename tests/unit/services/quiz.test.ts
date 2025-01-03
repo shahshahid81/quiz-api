@@ -14,29 +14,14 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question: {
-							key: 'Which method is not array method',
-							value: 'ARRAY_METHOD',
-						},
+						question:'Which method is not array method',
 						options: [
-							{
-								key: 'Map',
-								value: 'MAP',
-							},
-							{
-								key: 'Filter',
-								value: 'FILTER',
-							},
-							{
-								key: 'Reduce',
-								value: 'REDUCE',
-							},
-							{
-								key: 'Trim',
-								value: 'TRIM',
-							},
+							'Map',
+							'Filter',
+							'Reduce',
+							'Trim',
 						],
-						answer: 'TRIM',
+						answer: 'Trim',
 					},
 				],
 			};
@@ -53,32 +38,17 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question: {
-							key: 'Which method is not array method',
-							value: 'ARRAY_METHOD',
-						},
+						question:'Which method is not array method',
 						options: [
-							{
-								key: 'Map',
-								value: 'MAP',
-							},
-							{
-								key: 'Filter',
-								value: 'FILTER',
-							},
-							{
-								key: 'Reduce',
-								value: 'REDUCE',
-							},
-							{
-								key: 'Trim',
-								value: 'TRIM',
-							},
+							'Map',
+							'Filter',
+							'Reduce',
+							'Trim',
 						],
-						answer: 'TRIM',
+						answer: 'Trim',
 					},
 				],
-				id:uuidv4(),
+				id: uuidv4(),
 			};
 			jest
 				.spyOn(Quiz, 'getQuiz')
@@ -100,32 +70,17 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question: {
-							key: 'Which method is not array method',
-							value: 'ARRAY_METHOD',
-						},
+						question:'Which method is not array method',
 						options: [
-							{
-								key: 'Map',
-								value: 'MAP',
-							},
-							{
-								key: 'Filter',
-								value: 'FILTER',
-							},
-							{
-								key: 'Reduce',
-								value: 'REDUCE',
-							},
-							{
-								key: 'Trim',
-								value: 'TRIM',
-							},
+							'Map',
+							'Filter',
+							'Reduce',
+							'Trim',
 						],
-						answer: 'TRIM',
+						answer: 'Trim',
 					},
 				],
-				id,
+				id: uuidv4(),
 			};
 			jest
 				.spyOn(Quiz, 'getQuiz')
@@ -142,29 +97,14 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question: {
-							key: 'Which method is not array method',
-							value: 'ARRAY_METHOD',
-						},
+						question:'Which method is not array method',
 						options: [
-							{
-								key: 'Map',
-								value: 'MAP',
-							},
-							{
-								key: 'Filter',
-								value: 'FILTER',
-							},
-							{
-								key: 'Reduce',
-								value: 'REDUCE',
-							},
-							{
-								key: 'Trim',
-								value: 'TRIM',
-							},
+							'Map',
+							'Filter',
+							'Reduce',
+							'Trim',
 						],
-						answer: 'TRIM',
+						answer: 'Trim',
 					},
 				],
 				id,

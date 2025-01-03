@@ -10,23 +10,12 @@ export const createQuizSchema = z
 			.transform((value) => value.trim()),
 		questions: z
 			.object({
-				question: z.object({
-					key: z
-						.string({ message: 'Question key is required' })
-						.transform((value) => value.trim()),
-					value: z
-						.string({ message: 'Question value is required' })
-						.transform((value) => value.trim()),
-				}),
+				question: z
+					.string({ message: 'Question value is required' })
+					.transform((value) => value.trim()),
 				options: z
-					.object({
-						key: z
-							.string({ message: 'Option title is required' })
-							.transform((value) => value.trim()),
-						value: z
-							.string({ message: 'Option value is required' })
-							.transform((value) => value.trim()),
-					})
+					.string({ message: 'Option value is required' })
+					.transform((value) => value.trim())
 					.array()
 					.refine((payload) => payload.length === 4, {
 						message:
@@ -38,41 +27,28 @@ export const createQuizSchema = z
 			})
 			.refine(
 				(data) => {
-					const optionValues = data.options.map((option) => option.value);
-					return optionValues.includes(data.answer);
+					return data.options.includes(data.answer);
 				},
 				{ message: 'Answer must be within the options' }
 			)
 			.refine(
 				(data) => {
-					const optionValues = data.options.map((option) => option.value);
-					const optionKeys = data.options.map((option) => option.key);
-					return (
-						new Set(optionKeys).size === optionKeys.length &&
-						new Set(optionValues).size === optionValues.length
-					);
+					return new Set(data.options).size === data.options.length;
 				},
 				{ message: 'Options must be unique' }
 			)
 			.array(),
 	})
 	.refine((payload) => payload.questions.length, {
-		message:
-			'Questions array cannot be empty',
-			path: ['questions']
+		message: 'Questions array cannot be empty',
+		path: ['questions'],
 	})
 	.refine(
-		(data) => {
-			const questionKeys = data.questions.map(
-				(questionData) => questionData.question.key
+		(payload) => {
+			const questionKeys = payload.questions.map(
+				(questionData) => questionData.question
 			);
-			const questionValues = data.questions.map(
-				(questionData) => questionData.question.value
-			);
-			return (
-				new Set(questionKeys).size === questionKeys.length &&
-				new Set(questionValues).size === questionValues.length
-			);
+			return new Set(questionKeys).size === questionKeys.length;
 		},
 		{ message: 'Questions must be unique', path: ['questions'] }
 	);
