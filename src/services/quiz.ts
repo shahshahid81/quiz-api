@@ -1,6 +1,8 @@
+import Quiz from '../models/quiz';
 import { CreateQuiz } from '../validation/createQuiz';
 
 export function createQuiz({ title, questions }: CreateQuiz) {
-	console.dir({ title, questions }, { depth: null });
-	return { title, questions };
+	const quiz = { title, questions };
+	Quiz.add(quiz);
+	return quiz;
 }

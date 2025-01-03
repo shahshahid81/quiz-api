@@ -54,8 +54,12 @@ export const createQuizSchema = z
 				},
 				{ message: 'Options must be unique' }
 			)
-			.array()
-			.nonempty(),
+			.array(),
+	})
+	.refine((payload) => payload.questions.length, {
+		message:
+			'Questions array cannot be empty',
+			path: ['questions']
 	})
 	.refine(
 		(data) => {
