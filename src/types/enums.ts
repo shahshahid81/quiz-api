@@ -1,0 +1,3 @@
+export enum ErrorEnum {
+	UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY',
+}
