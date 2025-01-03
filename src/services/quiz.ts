@@ -3,6 +3,9 @@ import { CreateQuiz } from '../validation/createQuiz';
 
 export function createQuiz({ title, questions }: CreateQuiz) {
 	const quiz = { title, questions };
-	Quiz.add(quiz);
-	return quiz;
+	return Quiz.insert(quiz);
+}
+
+export function getQuiz(id: string) {
+	return Quiz.getOne(id);
 }

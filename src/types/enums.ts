@@ -1,3 +1,4 @@
 export enum ErrorEnum {
 	UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY',
+	NOT_FOUND = 'NOT_FOUND',
 }

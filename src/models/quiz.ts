@@ -1,8 +1,10 @@
 import { KeyValue } from '../types/common';
 import { ErrorEnum } from '../types/enums';
 import { CreateQuizPayload } from '../types/quiz';
+import { v4 as uuidv4 } from 'uuid';
 
 type QuizData = {
+	id: string;
 	title: string;
 	questions: {
 		question: KeyValue<string, string>;
@@ -22,15 +24,28 @@ class Quiz {
 		return this.quizMap;
 	}
 
-	add(payload: CreateQuizPayload) {
+	insert(payload: CreateQuizPayload) {
 		const quizMap = this.getQuiz();
-		if (quizMap.has(payload.title)) {
+		if ([...quizMap.values()].map(value => value.title).includes(payload.title)) {
 			throw {
 				type: ErrorEnum.UNPROCESSABLE_ENTITY,
 				message: 'Quiz Already Exists',
 			};
 		}
-		quizMap.set(payload.title, payload);
+		const quiz = { ...payload, id: uuidv4() };
+		quizMap.set(quiz.id, quiz);
+		return quiz;
+	}
+
+	getOne(id: string) {
+		const quizMap = this.getQuiz();
+		if (!quizMap.has(id)) {
+			throw {
+				type: ErrorEnum.NOT_FOUND,
+				message: 'Quiz Not Found',
+			};
+		}
+		return quizMap.get(id);
 	}
 }
 

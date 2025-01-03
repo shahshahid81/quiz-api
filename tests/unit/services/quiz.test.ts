@@ -1,6 +1,7 @@
 import * as QuizService from '../../../src/services/quiz';
 import Quiz from '../../../src/models/quiz';
 import { ErrorEnum } from '../../../src/types/enums';
+import { v4 as uuidv4 } from 'uuid';
 
 afterEach(() => {
 	jest.clearAllMocks();
@@ -40,9 +41,11 @@ describe('Quiz Service', () => {
 				],
 			};
 
-			const result = QuizService.createQuiz(payload);
+			const response = QuizService.createQuiz(payload);
 
-			expect(result).toEqual(payload);
+			expect(response).toMatchObject(payload);
+			expect(response.id).toBeDefined();
+			expect(typeof response.id).toBe('string');
 		});
 
 		test('It should throw error if quiz with the same title already exists', () => {
@@ -75,10 +78,11 @@ describe('Quiz Service', () => {
 						answer: 'TRIM',
 					},
 				],
+				id:uuidv4(),
 			};
 			jest
 				.spyOn(Quiz, 'getQuiz')
-				.mockReturnValueOnce(new Map().set(payload.title, payload));
+				.mockReturnValueOnce(new Map().set(payload.id,payload));
 
 			expect(() => QuizService.createQuiz(payload)).toThrow(
 				expect.objectContaining({
@@ -86,6 +90,95 @@ describe('Quiz Service', () => {
 					message: 'Quiz Already Exists',
 				})
 			);
+		});
+	});
+
+	describe('getQuiz', () => {
+		test('It should get a quiz based on id', () => {
+			const id = uuidv4();
+			const payload = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: {
+							key: 'Which method is not array method',
+							value: 'ARRAY_METHOD',
+						},
+						options: [
+							{
+								key: 'Map',
+								value: 'MAP',
+							},
+							{
+								key: 'Filter',
+								value: 'FILTER',
+							},
+							{
+								key: 'Reduce',
+								value: 'REDUCE',
+							},
+							{
+								key: 'Trim',
+								value: 'TRIM',
+							},
+						],
+						answer: 'TRIM',
+					},
+				],
+				id,
+			};
+			jest
+				.spyOn(Quiz, 'getQuiz')
+				.mockReturnValueOnce(new Map().set(payload.id,payload));
+
+			const response = QuizService.getQuiz(id);
+
+			expect(response).toEqual(payload);
+		});
+
+		test('It should throw error if id doesnt exist', () => {
+			const id = uuidv4();
+			const payload = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: {
+							key: 'Which method is not array method',
+							value: 'ARRAY_METHOD',
+						},
+						options: [
+							{
+								key: 'Map',
+								value: 'MAP',
+							},
+							{
+								key: 'Filter',
+								value: 'FILTER',
+							},
+							{
+								key: 'Reduce',
+								value: 'REDUCE',
+							},
+							{
+								key: 'Trim',
+								value: 'TRIM',
+							},
+						],
+						answer: 'TRIM',
+					},
+				],
+				id,
+			};
+			jest
+				.spyOn(Quiz, 'getQuiz')
+				.mockReturnValueOnce(new Map().set(payload.id,payload));
+
+				expect(() => QuizService.getQuiz(uuidv4())).toThrow(
+					expect.objectContaining({
+						type: ErrorEnum.NOT_FOUND,
+						message: 'Quiz Not Found',
+					})
+				);
 		});
 	});
 });
