@@ -11,17 +11,19 @@ Run `npm run test:unit` command to execute unit testing and `npm run test:e2e` t
 To use docker to run the server, run `docker compose up` command. Please note that if there are any changes, the api server has to be built again.
 
 Limitations:
-1. While running `npm run test:e2e` command, there is an error that  `Jest did not exit one second after the test run has completed.`. 
-2. Ideally, ids should have been used for questions and options while submitting answers but instead of ids, string values of questions and options are used.
-3. There is no standard expection handling mechanism used to throw api errors and instead `routeHandler` is used in route file for the 4 APIs.
-4. PORT has been hardcoded instead of using .env file for ease of running the project.
-5. Since there is no api to create session, random session_id has to be generated for submission of the answers.
+
+1. Ideally, ids should have been used for questions and options while submitting answers but instead of ids, string values of questions and options are used.
+2. There is no standard expection handling mechanism used to throw api errors and instead `routeHandler` is used in route file for the 4 APIs.
+3. PORT has been hardcoded instead of using .env file for ease of running the project.
+4. Since there is no api to create session, random session_id has to be generated for submission of the answers.
 
 APIs:
+
 1. Create QUIZ.
 
 Endpoint: POST `http://localhost:3000/quiz`
 Request Payload:
+
 ```json
 {
 	"title": "Javascript",
@@ -48,12 +50,7 @@ Request Payload:
 		},
 		{
 			"question": "Which built-in method removes the last element from an array and returns that element?",
-			"options": [
-				"pop()",
-				"push()",
-				"shift()",
-				"unshift()"
-			],
+			"options": ["pop()", "push()", "shift()", "unshift()"],
 			"answer": "pop()"
 		},
 		{
@@ -68,12 +65,7 @@ Request Payload:
 		},
 		{
 			"question": "What is the result of '10' + 5 in JavaScript?",
-			"options": [
-				"105",
-				"15",
-				"510",
-				"Error"
-			],
+			"options": ["105", "15", "510", "Error"],
 			"answer": "105"
 		}
 	]
@@ -81,6 +73,7 @@ Request Payload:
 ```
 
 Response:
+
 ```json
 {
 	"success": true,
@@ -109,12 +102,7 @@ Response:
 			},
 			{
 				"question": "Which built-in method removes the last element from an array and returns that element?",
-				"options": [
-					"pop()",
-					"push()",
-					"shift()",
-					"unshift()"
-				],
+				"options": ["pop()", "push()", "shift()", "unshift()"],
 				"answer": "pop()"
 			},
 			{
@@ -129,12 +117,7 @@ Response:
 			},
 			{
 				"question": "What is the result of '10' + 5 in JavaScript?",
-				"options": [
-					"105",
-					"15",
-					"510",
-					"Error"
-				],
+				"options": ["105", "15", "510", "Error"],
 				"answer": "105"
 			}
 		],
@@ -144,9 +127,10 @@ Response:
 ```
 
 2. Get Quiz
-Endpoint: GET `http://localhost:3000/quiz/:id`
+   Endpoint: GET `http://localhost:3000/quiz/:id`
 
 Response:
+
 ```json
 {
 	"success": true,
@@ -173,12 +157,7 @@ Response:
 			},
 			{
 				"question": "Which built-in method removes the last element from an array and returns that element?",
-				"options": [
-					"pop()",
-					"push()",
-					"shift()",
-					"unshift()"
-				]
+				"options": ["pop()", "push()", "shift()", "unshift()"]
 			},
 			{
 				"question": "What is the correct syntax for referring to an external script called 'myfile.js'?",
@@ -191,12 +170,7 @@ Response:
 			},
 			{
 				"question": "What is the result of '10' + 5 in JavaScript?",
-				"options": [
-					"105",
-					"15",
-					"510",
-					"Error"
-				]
+				"options": ["105", "15", "510", "Error"]
 			}
 		],
 		"id": "8c47c8f0-e668-4838-babb-a1ab88aca312"
@@ -205,8 +179,9 @@ Response:
 ```
 
 3. Submit Quiz Question
-Endpoint: POST `http://localhost:3000/quiz/submit`
-Request Payload:
+   Endpoint: POST `http://localhost:3000/quiz/submit`
+   Request Payload:
+
 ```json
 {
 	"sessionId": "1",
@@ -217,6 +192,7 @@ Request Payload:
 ```
 
 Response:
+
 ```json
 {
 	"success": true,
@@ -227,9 +203,10 @@ Response:
 ```
 
 4. Get Quiz Result
-Endpoint: GET `http://localhost:3000/quiz/:quizId/:sessionId`
+   Endpoint: GET `http://localhost:3000/quiz/:quizId/:sessionId`
 
 Response:
+
 ```json
 {
 	"success": true,
