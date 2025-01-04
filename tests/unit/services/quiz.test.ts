@@ -419,7 +419,7 @@ describe('Quiz Service', () => {
 	});
 
 	describe('submitQuestion', () => {
-		test('It should successfully submit quiz question and return is_correct as true', () => {
+		test('It should successfully submit quiz question and return isCorrect as true', () => {
 			const quizData = {
 				title: 'Javascript',
 				questions: [
@@ -473,8 +473,8 @@ describe('Quiz Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: quizData.id,
+				sessionId: '1',
+				quizId: quizData.id,
 				question: 'What is the correct way to write a JavaScript array?',
 				answer: "var colors = ['red', 'green', 'blue']",
 			};
@@ -482,11 +482,11 @@ describe('Quiz Service', () => {
 			const response = QuizService.submitQuestion(payload);
 
 			expect(response).toEqual({
-				is_correct: true,
+				isCorrect: true,
 			});
 		});
 
-		test('It should successfully submit quiz question and return is_correct as false', () => {
+		test('It should successfully submit quiz question and return isCorrect as false', () => {
 			const quizData = {
 				title: 'Javascript',
 				questions: [
@@ -540,8 +540,8 @@ describe('Quiz Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: quizData.id,
+				sessionId: '1',
+				quizId: quizData.id,
 				question: "What is the result of '10' + 5 in JavaScript?",
 				answer: '15',
 			};
@@ -549,8 +549,8 @@ describe('Quiz Service', () => {
 			const response = QuizService.submitQuestion(payload);
 
 			expect(response).toEqual({
-				is_correct: false,
-				correct_answer: '105',
+				isCorrect: false,
+				correctAnswer: '105',
 			});
 		});
 
@@ -608,8 +608,8 @@ describe('Quiz Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: uuidv4(),
+				sessionId: '1',
+				quizId: uuidv4(),
 				question: 'What is the correct way to write a JavaScript array?',
 				answer: "var colors = ['red', 'green', 'blue']",
 			};
@@ -676,8 +676,8 @@ describe('Quiz Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: quizData.id,
+				sessionId: '1',
+				quizId: quizData.id,
 				question: 'Test value',
 				answer: "var colors = ['red', 'green', 'blue']",
 			};
@@ -744,8 +744,8 @@ describe('Quiz Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: quizData.id,
+				sessionId: '1',
+				quizId: quizData.id,
 				question: 'What is the correct way to write a JavaScript array?',
 				answer: 'Test',
 			};
@@ -813,7 +813,7 @@ describe('Quiz Service', () => {
 
 			const resultDataPayload = [
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question: 'What is the correct way to write a JavaScript array?',
 					answer: "var colors = ['red', 'green', 'blue']",
 				},
@@ -824,8 +824,8 @@ describe('Quiz Service', () => {
 
 			expect(() =>
 				QuizService.getQuizResult({
-					quiz_id: quizDataPayload.id,
-					session_id: '1',
+					quizId: quizDataPayload.id,
+					sessionId: '1',
 				})
 			).toThrow(
 				expect.objectContaining({
@@ -888,29 +888,29 @@ describe('Quiz Service', () => {
 
 			const resultDataPayload = [
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question: 'What is the correct way to write a JavaScript array?',
 					answer: "var colors = ['red', 'green', 'blue']",
 				},
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question: 'How do you write a conditional statement in JavaScript?',
 					answer: 'if i = 4 then { ... }',
 				},
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question:
 						'Which built-in method removes the last element from an array and returns that element?',
 					answer: 'pop()',
 				},
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question:
 						"What is the correct syntax for referring to an external script called 'myfile.js'?",
 					answer: "<script src='myfile.js'>",
 				},
 				{
-					quiz_id: quizDataPayload.id,
+					quizId: quizDataPayload.id,
 					question: "What is the result of '10' + 5 in JavaScript?",
 					answer: '105',
 				},
@@ -924,32 +924,32 @@ describe('Quiz Service', () => {
 				correct: 4,
 				result: [
 					{
-						is_correct: true,
-						user_answer: "var colors = ['red', 'green', 'blue']",
+						isCorrect: true,
+						userAnswer: "var colors = ['red', 'green', 'blue']",
 					},
 					{
-						is_correct: false,
-						user_answer: 'if i = 4 then { ... }',
-						correct_answer: 'if (i == 4) { ... }',
+						isCorrect: false,
+						userAnswer: 'if i = 4 then { ... }',
+						correctAnswer: 'if (i == 4) { ... }',
 					},
 					{
-						is_correct: true,
-						user_answer: 'pop()',
+						isCorrect: true,
+						userAnswer: 'pop()',
 					},
 					{
-						is_correct: true,
-						user_answer: "<script src='myfile.js'>",
+						isCorrect: true,
+						userAnswer: "<script src='myfile.js'>",
 					},
 					{
-						is_correct: true,
-						user_answer: '105',
+						isCorrect: true,
+						userAnswer: '105',
 					},
 				],
 			};
 
 			const response = QuizService.getQuizResult({
-				quiz_id: quizDataPayload.id,
-				session_id: '1',
+				quizId: quizDataPayload.id,
+				sessionId: '1',
 			});
 
 			expect(response).toEqual(expectedPayload);

@@ -65,9 +65,9 @@ router.post(
 	validate(submitAnswerSchema),
 	(req: Request, res: Response, next: NextFunction): void => {
 		routeHandler(req, res, next, (req, res) => {
-			const { question, quiz_id, answer, session_id } =
+			const { question, quizId, answer, sessionId } =
 				req.body as SubmitAnswer;
-			const result = submitQuestion({ question, quiz_id, answer, session_id });
+			const result = submitQuestion({ question, quizId, answer, sessionId });
 			res.status(200).json({ success: true, result });
 		});
 	}
@@ -78,8 +78,8 @@ router.get(
 	(req: Request, res: Response, next: NextFunction): void => {
 		routeHandler(req, res, next, (req, res) => {
 			const result = getQuizResult({
-				quiz_id: req.params.quizId,
-				session_id: req.params.sessionId,
+				quizId: req.params.quizId,
+				sessionId: req.params.sessionId,
 			});
 			res.status(200).json({ success: true, result });
 		});

@@ -65,19 +65,19 @@ describe('Result Service', () => {
 
 			const resultData = [
 				{
-					quiz_id: quizData.id,
+					quizId: quizData.id,
 					question: 'How do you write a conditional statement in JavaScript?',
 					answer: 'if i = 4 then { ... }',
 				},
 			];
-			const session_id = '1';
+			const sessionId = '1';
 			jest
 				.spyOn(Result, 'getAll')
-				.mockReturnValue(new Map().set(session_id, resultData));
+				.mockReturnValue(new Map().set(sessionId, resultData));
 
 			const payload = {
-				session_id,
-				quiz_id: quizData.id,
+				sessionId,
+				quizId: quizData.id,
 				question: 'How do you write a conditional statement in JavaScript?',
 				answer: 'if i = 4 then { ... }',
 			};
@@ -141,8 +141,8 @@ describe('Result Service', () => {
 				.mockReturnValue(new Map().set(quizData.id, quizData));
 
 			const payload = {
-				session_id: '1',
-				quiz_id: quizData.id,
+				sessionId: '1',
+				quizId: quizData.id,
 				question: 'How do you write a conditional statement in JavaScript?',
 				answer: 'if i = 4 then { ... }',
 			};
@@ -157,17 +157,17 @@ describe('Result Service', () => {
 		test('It should get result data based on id', () => {
 			const resultData = [
 				{
-					quiz_id: uuidv4(),
+					quizId: uuidv4(),
 					question: 'How do you write a conditional statement in JavaScript?',
 					answer: 'if i = 4 then { ... }',
 				},
 			];
-			const session_id = '1';
+			const sessionId = '1';
 			jest
 				.spyOn(Result, 'getAll')
-				.mockReturnValue(new Map().set(session_id, resultData));
+				.mockReturnValue(new Map().set(sessionId, resultData));
 
-			const response = ResultService.getResultData(session_id);
+			const response = ResultService.getResultData(sessionId);
 
 			expect(response).toEqual(resultData);
 		});
@@ -175,15 +175,15 @@ describe('Result Service', () => {
 		test('It should throw error if id doesnt exist', () => {
 			const resultData = [
 				{
-					quiz_id: uuidv4(),
+					quizId: uuidv4(),
 					question: 'How do you write a conditional statement in JavaScript?',
 					answer: 'if i = 4 then { ... }',
 				},
 			];
-			const session_id = '1';
+			const sessionId = '1';
 			jest
 				.spyOn(Result, 'getAll')
-				.mockReturnValue(new Map().set(session_id, resultData));
+				.mockReturnValue(new Map().set(sessionId, resultData));
 
 			expect(() => ResultService.getResultData('2')).toThrow(
 				expect.objectContaining({

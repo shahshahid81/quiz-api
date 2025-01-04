@@ -17,11 +17,11 @@ class Result {
 		return resultMap.get(id);
 	}
 
-	insert({ question, quiz_id, session_id, answer }: SubmitAnswer): void {
+	insert({ question, quizId, sessionId, answer }: SubmitAnswer): void {
 		const resultMap = this.getAll();
-		const result = this.getOne(session_id) ?? [];
-		result.push({ quiz_id, question, answer });
-		resultMap.set(session_id, result);
+		const result = this.getOne(sessionId) ?? [];
+		result.push({ quizId, question, answer });
+		resultMap.set(sessionId, result);
 	}
 }
 

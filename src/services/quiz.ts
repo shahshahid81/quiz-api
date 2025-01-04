@@ -74,15 +74,15 @@ export function submitQuestion(
 	}
 	Result.insert(payload);
 
-	const correct_answer = fetchCorrectAnswer(payload);
-	const is_correct = correct_answer === payload.answer;
+	const correctAnswer = fetchCorrectAnswer(payload);
+	const isCorrect = correctAnswer === payload.answer;
 
 	const response: SubmitQuestionResultType = {
-		is_correct,
+		isCorrect,
 	};
 
-	if (!response.is_correct && correct_answer) {
-		response.correct_answer = correct_answer;
+	if (!response.isCorrect && correctAnswer) {
+		response.correctAnswer = correctAnswer;
 	}
 	return response;
 }
@@ -90,8 +90,8 @@ export function submitQuestion(
 export function getQuizResult(
 	payload: GetQuizResultPayloadType
 ): GetQuizResultResponseType {
-	const quiz = getQuiz(payload.quiz_id);
-	const resultData = getResultData(payload.session_id);
+	const quiz = getQuiz(payload.quizId);
+	const resultData = getResultData(payload.sessionId);
 
 	if (quiz.questions.length !== resultData.length) {
 		throw {
@@ -109,20 +109,20 @@ export function getQuizResult(
 	});
 
 	resultData.forEach((resultEntry) => {
-		let is_correct;
-		const correct_answer = questionAnswerMap.get(resultEntry.question)!;
-		if (correct_answer === resultEntry.answer) {
+		let isCorrect;
+		const correctAnswer = questionAnswerMap.get(resultEntry.question)!;
+		if (correctAnswer === resultEntry.answer) {
 			correct++;
-			is_correct = true;
+			isCorrect = true;
 		} else {
-			is_correct = false;
+			isCorrect = false;
 		}
 		const data: GetQuizResultResponseType['result'][number] = {
-			is_correct,
-			user_answer: resultEntry.answer,
+			isCorrect,
+			userAnswer: resultEntry.answer,
 		};
-		if (!is_correct) {
-			data.correct_answer = correct_answer;
+		if (!isCorrect) {
+			data.correctAnswer = correctAnswer;
 		}
 		result.push(data);
 	});
@@ -131,16 +131,16 @@ export function getQuizResult(
 }
 
 function isQuestionValid(
-	payload: Pick<SubmitAnswer, 'quiz_id' | 'question'>
+	payload: Pick<SubmitAnswer, 'quizId' | 'question'>
 ): boolean {
-	const quiz = getQuiz(payload.quiz_id);
+	const quiz = getQuiz(payload.quizId);
 	return quiz.questions.map((data) => data.question).includes(payload.question);
 }
 
 function isAnswerValid(
-	payload: Pick<SubmitAnswer, 'quiz_id' | 'answer' | 'question'>
+	payload: Pick<SubmitAnswer, 'quizId' | 'answer' | 'question'>
 ): boolean {
-	const quiz = getQuiz(payload.quiz_id);
+	const quiz = getQuiz(payload.quizId);
 	return quiz.questions
 		.filter((data) => data.question === payload.question)
 		.map((data) => data.options)
@@ -151,7 +151,7 @@ function isAnswerValid(
 function fetchCorrectAnswer(
 	payload: SubmitAnswer
 ): QuestionType['answer'] | null {
-	const quiz = getQuiz(payload.quiz_id);
+	const quiz = getQuiz(payload.quizId);
 	const question = quiz.questions.find(
 		(data) => data.question === payload.question
 	);

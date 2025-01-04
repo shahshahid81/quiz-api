@@ -18,21 +18,21 @@ export type GetQuizType = Omit<QuizDataType, 'questions'> & {
 };
 
 export type SubmitQuestionResultType = {
-	is_correct: boolean;
-	correct_answer?: string;
+	isCorrect: boolean;
+	correctAnswer?: string;
 };
 
 export type GetQuizResultPayloadType = {
-	session_id: string;
-	quiz_id: string;
+	sessionId: string;
+	quizId: string;
 };
 
 export type GetQuizResultResponseType = {
 	total: number;
 	correct: number;
 	result: {
-		is_correct: boolean;
-		user_answer: string;
-		correct_answer?: string;
+		isCorrect: boolean;
+		userAnswer: string;
+		correctAnswer?: string;
 	}[];
 };

@@ -4,15 +4,15 @@ import { ResultDataType } from '../types/result';
 import { SubmitAnswer } from '../validation/submitAnswer';
 
 export function isQuestionAlreadySubmitted({
-	quiz_id,
+	quizId,
 	question,
-	session_id,
+	sessionId,
 }: SubmitAnswer): boolean {
-	const sessionResults = Result.getOne(session_id);
+	const sessionResults = Result.getOne(sessionId);
 
 	if (sessionResults) {
 		const submittedQuizQuestions = sessionResults
-			.filter((sessionResults) => sessionResults.quiz_id === quiz_id)
+			.filter((sessionResults) => sessionResults.quizId === quizId)
 			.map((sessionResult) => sessionResult.question);
 		return submittedQuizQuestions.includes(question);
 	}

@@ -1,5 +1,5 @@
 export type ResultDataType = {
-	quiz_id: string;
+	quizId: string;
 	question: string;
 	answer: string;
 };
