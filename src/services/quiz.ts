@@ -1,7 +1,7 @@
 import Quiz from '../models/quiz';
 import Result from '../models/result';
 import { ErrorEnum } from '../types/enums';
-import { QuizDataType } from '../types/quiz';
+import { GetQuizType, QuestionType, QuizDataType } from '../types/quiz';
 import { CreateQuiz } from '../validation/createQuiz';
 import { SubmitAnswer } from '../validation/submitAnswer';
 import { isQuestionAlreadySubmitted } from './result';
@@ -28,6 +28,18 @@ export function getQuiz(id: string): QuizDataType {
 		};
 	}
 	return quizData;
+}
+
+export function getQuizWithHiddenAnswers(id: string): GetQuizType {
+	const quizData = getQuiz(id);
+	const questions = quizData.questions.map((questionData) => {
+		const data: Omit<QuestionType, 'answer'> & {
+			answer?: QuestionType['answer'];
+		} = { ...questionData };
+		delete data.answer;
+		return data;
+	});
+	return { ...quizData, questions };
 }
 
 export function submitQuestion(payload: SubmitAnswer): void {

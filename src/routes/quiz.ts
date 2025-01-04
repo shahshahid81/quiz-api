@@ -1,7 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { validate } from '../middleware/validate';
 import { CreateQuiz, createQuizSchema } from '../validation/createQuiz';
-import { createQuiz, getQuiz, submitQuestion } from '../services/quiz';
+import {
+	createQuiz,
+	getQuizWithHiddenAnswers,
+	submitQuestion,
+} from '../services/quiz';
 import { ErrorEnum } from '../types/enums';
 import { SubmitAnswer, submitAnswerSchema } from '../validation/submitAnswer';
 
@@ -50,7 +54,7 @@ router.post(
 router.get('/:id', (req: Request, res: Response, next: NextFunction): void => {
 	routeHandler(req, res, next, (req, res) => {
 		const { id } = req.params;
-		const quiz = getQuiz(id);
+		const quiz = getQuizWithHiddenAnswers(id);
 		res.status(200).json({ success: true, quiz });
 	});
 });
