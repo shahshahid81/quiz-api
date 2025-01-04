@@ -1,12 +1,10 @@
-// Important to load config here at the top so that other imports below will recieve the env values in process.env key
-import { config } from './config/env';
 import bodyParser from 'body-parser';
 import express from 'express';
 import { Server } from 'http';
 import quizRouter from './routes/quiz';
 
 const app = express();
-const port = config.PORT;
+const port = 3000;
 
 app.use(bodyParser.json());
 
@@ -16,9 +14,13 @@ app.get('/', (_req, res) => {
 
 app.use('/quiz', quizRouter);
 
-export async function startServer(): Promise<Server | undefined> {
+// Added is_test flag to avoid parallel jest issue. Ideally, using different env file for development and test will not cause this issue but env file is not used for ease of testing
+export async function startServer(
+	is_test = false
+): Promise<Server | undefined> {
 	try {
-		const server = app.listen(port, () => {
+		const portBetween5000and6500 = Math.floor(Math.random() * 60000) + 5000;
+		const server = app.listen(is_test ? portBetween5000and6500 : port, () => {
 			console.log(`[server]: Server is running at http://localhost:${port}`);
 		});
 		return server;

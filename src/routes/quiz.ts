@@ -65,8 +65,7 @@ router.post(
 	validate(submitAnswerSchema),
 	(req: Request, res: Response, next: NextFunction): void => {
 		routeHandler(req, res, next, (req, res) => {
-			const { question, quizId, answer, sessionId } =
-				req.body as SubmitAnswer;
+			const { question, quizId, answer, sessionId } = req.body as SubmitAnswer;
 			const result = submitQuestion({ question, quizId, answer, sessionId });
 			res.status(200).json({ success: true, result });
 		});
