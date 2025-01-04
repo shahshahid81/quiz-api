@@ -16,3 +16,8 @@ export type QuizDataType = CreateQuizPayload & {
 export type GetQuizType = Omit<QuizDataType, 'questions'> & {
 	questions: Omit<QuestionType, 'answer'>[];
 };
+
+export type SubmitQuestionResultType = {
+	is_correct: boolean;
+	correct_answer?: string;
+};

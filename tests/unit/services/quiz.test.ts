@@ -418,7 +418,7 @@ describe('Quiz Service', () => {
 	});
 
 	describe('submitQuestion', () => {
-		test('It should successfully submit quiz question', () => {
+		test('It should successfully submit quiz question and return is_correct as true', () => {
 			const quizData = {
 				title: 'Javascript',
 				questions: [
@@ -477,11 +477,80 @@ describe('Quiz Service', () => {
 				question: 'What is the correct way to write a JavaScript array?',
 				answer: "var colors = ['red', 'green', 'blue']",
 			};
-			jest.spyOn(QuizService, 'submitQuestion');
 
-			QuizService.submitQuestion(payload);
+			const response = QuizService.submitQuestion(payload);
 
-			expect(QuizService.submitQuestion).toHaveBeenCalledTimes(1);
+			expect(response).toEqual({
+				is_correct: true,
+			});
+		});
+
+		test('It should successfully submit quiz question and return is_correct as false', () => {
+			const quizData = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: 'What is the correct way to write a JavaScript array?',
+						options: [
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
+						],
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
+					},
+				],
+				id: uuidv4(),
+			};
+			jest
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValue(new Map().set(quizData.id, quizData));
+
+			const payload = {
+				session_id: '1',
+				quiz_id: quizData.id,
+				question: "What is the result of '10' + 5 in JavaScript?",
+				answer: '15',
+			};
+
+			const response = QuizService.submitQuestion(payload);
+
+			expect(response).toEqual({
+				is_correct: false,
+				correct_answer: '105',
+			});
 		});
 
 		test('It should fail if quiz id is incorrect', () => {

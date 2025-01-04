@@ -1,7 +1,12 @@
 import Quiz from '../models/quiz';
 import Result from '../models/result';
 import { ErrorEnum } from '../types/enums';
-import { GetQuizType, QuestionType, QuizDataType } from '../types/quiz';
+import {
+	GetQuizType,
+	QuestionType,
+	QuizDataType,
+	SubmitQuestionResultType,
+} from '../types/quiz';
 import { CreateQuiz } from '../validation/createQuiz';
 import { SubmitAnswer } from '../validation/submitAnswer';
 import { isQuestionAlreadySubmitted } from './result';
@@ -42,7 +47,9 @@ export function getQuizWithHiddenAnswers(id: string): GetQuizType {
 	return { ...quizData, questions };
 }
 
-export function submitQuestion(payload: SubmitAnswer): void {
+export function submitQuestion(
+	payload: SubmitAnswer
+): SubmitQuestionResultType {
 	if (!isQuestionValid(payload)) {
 		throw {
 			type: ErrorEnum.NOT_FOUND,
@@ -64,6 +71,18 @@ export function submitQuestion(payload: SubmitAnswer): void {
 		};
 	}
 	Result.insert(payload);
+
+	const correct_answer = fetchCorrectAnswer(payload);
+	const is_correct = correct_answer === payload.answer;
+
+	const response: SubmitQuestionResultType = {
+		is_correct,
+	};
+
+	if (!response.is_correct && correct_answer) {
+		response.correct_answer = correct_answer;
+	}
+	return response;
 }
 
 function isQuestionValid(
@@ -82,4 +101,14 @@ function isAnswerValid(
 		.map((data) => data.options)
 		.flat()
 		.includes(payload.answer);
+}
+
+function fetchCorrectAnswer(
+	payload: SubmitAnswer
+): QuestionType['answer'] | null {
+	const quiz = getQuiz(payload.quiz_id);
+	const question = quiz.questions.find(
+		(data) => data.question === payload.question
+	);
+	return question?.answer ?? null;
 }
