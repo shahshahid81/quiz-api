@@ -14,14 +14,46 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question:'Which method is not array method',
+						question: 'What is the correct way to write a JavaScript array?',
 						options: [
-							'Map',
-							'Filter',
-							'Reduce',
-							'Trim',
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
 						],
-						answer: 'Trim',
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
 					},
 				],
 			};
@@ -38,21 +70,53 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question:'Which method is not array method',
+						question: 'What is the correct way to write a JavaScript array?',
 						options: [
-							'Map',
-							'Filter',
-							'Reduce',
-							'Trim',
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
 						],
-						answer: 'Trim',
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
 					},
 				],
 				id: uuidv4(),
 			};
 			jest
-				.spyOn(Quiz, 'getQuiz')
-				.mockReturnValueOnce(new Map().set(payload.id,payload));
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValueOnce(new Map().set(payload.id, payload));
 
 			expect(() => QuizService.createQuiz(payload)).toThrow(
 				expect.objectContaining({
@@ -70,21 +134,53 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question:'Which method is not array method',
+						question: 'What is the correct way to write a JavaScript array?',
 						options: [
-							'Map',
-							'Filter',
-							'Reduce',
-							'Trim',
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
 						],
-						answer: 'Trim',
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
 					},
 				],
-				id: uuidv4(),
+				id,
 			};
 			jest
-				.spyOn(Quiz, 'getQuiz')
-				.mockReturnValueOnce(new Map().set(payload.id,payload));
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValueOnce(new Map().set(payload.id, payload));
 
 			const response = QuizService.getQuiz(id);
 
@@ -97,28 +193,332 @@ describe('Quiz Service', () => {
 				title: 'Javascript',
 				questions: [
 					{
-						question:'Which method is not array method',
+						question: 'What is the correct way to write a JavaScript array?',
 						options: [
-							'Map',
-							'Filter',
-							'Reduce',
-							'Trim',
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
 						],
-						answer: 'Trim',
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
 					},
 				],
 				id,
 			};
 			jest
-				.spyOn(Quiz, 'getQuiz')
-				.mockReturnValueOnce(new Map().set(payload.id,payload));
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValueOnce(new Map().set(payload.id, payload));
 
-				expect(() => QuizService.getQuiz(uuidv4())).toThrow(
-					expect.objectContaining({
-						type: ErrorEnum.NOT_FOUND,
-						message: 'Quiz Not Found',
-					})
-				);
+			expect(() => QuizService.getQuiz(uuidv4())).toThrow(
+				expect.objectContaining({
+					type: ErrorEnum.NOT_FOUND,
+					message: 'Quiz Not Found',
+				})
+			);
+		});
+	});
+
+	describe('submitQuestion', () => {
+		test('It should successfully submit quiz question', () => {
+			const quizData = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: 'What is the correct way to write a JavaScript array?',
+						options: [
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
+						],
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
+					},
+				],
+				id: uuidv4(),
+			};
+			jest
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValue(new Map().set(quizData.id, quizData));
+
+			const payload = {
+				session_id: '1',
+				quiz_id: quizData.id,
+				question: 'What is the correct way to write a JavaScript array?',
+				answer: "var colors = ['red', 'green', 'blue']",
+			};
+			jest.spyOn(QuizService, 'submitQuestion');
+
+			QuizService.submitQuestion(payload);
+
+			expect(QuizService.submitQuestion).toHaveBeenCalledTimes(1);
+		});
+
+		test('It should fail if quiz id is incorrect', () => {
+			const quizData = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: 'What is the correct way to write a JavaScript array?',
+						options: [
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
+						],
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
+					},
+				],
+				id: uuidv4(),
+			};
+			jest
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValue(new Map().set(quizData.id, quizData));
+
+			const payload = {
+				session_id: '1',
+				quiz_id: uuidv4(),
+				question: 'What is the correct way to write a JavaScript array?',
+				answer: "var colors = ['red', 'green', 'blue']",
+			};
+
+			expect(() => QuizService.submitQuestion(payload)).toThrow(
+				expect.objectContaining({
+					type: ErrorEnum.NOT_FOUND,
+					message: 'Quiz Not Found',
+				})
+			);
+		});
+
+		test('It should fail if question is incorrect', () => {
+			const quizData = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: 'What is the correct way to write a JavaScript array?',
+						options: [
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
+						],
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
+					},
+				],
+				id: uuidv4(),
+			};
+			jest
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValue(new Map().set(quizData.id, quizData));
+
+			const payload = {
+				session_id: '1',
+				quiz_id: quizData.id,
+				question: 'Test value',
+				answer: "var colors = ['red', 'green', 'blue']",
+			};
+
+			expect(() => QuizService.submitQuestion(payload)).toThrow(
+				expect.objectContaining({
+					type: ErrorEnum.NOT_FOUND,
+					message: 'Question Not Found',
+				})
+			);
+		});
+
+		test('It should fail if option is incorrect', () => {
+			const quizData = {
+				title: 'Javascript',
+				questions: [
+					{
+						question: 'What is the correct way to write a JavaScript array?',
+						options: [
+							"var colors = (1:'red', 2:'green', 3:'blue')",
+							"var colors = 'red', 'green', 'blue'",
+							"var colors = ['red', 'green', 'blue']",
+							'var colors = (red, green, blue)',
+						],
+						answer: "var colors = ['red', 'green', 'blue']",
+					},
+					{
+						question: 'How do you write a conditional statement in JavaScript?',
+						options: [
+							'if (i = 4) { ... }',
+							'if i = 4 then { ... }',
+							'if i == 4 then { ... }',
+							'if (i == 4) { ... }',
+						],
+						answer: 'if (i == 4) { ... }',
+					},
+					{
+						question:
+							'Which built-in method removes the last element from an array and returns that element?',
+						options: ['pop()', 'push()', 'shift()', 'unshift()'],
+						answer: 'pop()',
+					},
+					{
+						question:
+							"What is the correct syntax for referring to an external script called 'myfile.js'?",
+						options: [
+							"<script src='myfile.js'>",
+							"<script href='myfile.js'>",
+							"<script name='myfile.js'>",
+							"<script file='myfile.js'>",
+						],
+						answer: "<script src='myfile.js'>",
+					},
+					{
+						question: "What is the result of '10' + 5 in JavaScript?",
+						options: ['105', '15', '510', 'Error'],
+						answer: '105',
+					},
+				],
+				id: uuidv4(),
+			};
+			jest
+				.spyOn(Quiz, 'getAll')
+				.mockReturnValue(new Map().set(quizData.id, quizData));
+
+			const payload = {
+				session_id: '1',
+				quiz_id: quizData.id,
+				question: 'What is the correct way to write a JavaScript array?',
+				answer: 'Test',
+			};
+
+			expect(() => QuizService.submitQuestion(payload)).toThrow(
+				expect.objectContaining({
+					type: ErrorEnum.NOT_FOUND,
+					message: 'Option Not Found',
+				})
+			);
 		});
 	});
 });
