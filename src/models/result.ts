@@ -29,7 +29,6 @@ class Result {
 		const result = this.getOne(session_id) ?? [];
 		result.push({ quiz_id, question, answer });
 		resultMap.set(session_id, result);
-		console.log(this.getOne(session_id));
 	}
 }
 
