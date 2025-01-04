@@ -3,6 +3,7 @@ import { validate } from '../middleware/validate';
 import { CreateQuiz, createQuizSchema } from '../validation/createQuiz';
 import {
 	createQuiz,
+	getQuizResult,
 	getQuizWithHiddenAnswers,
 	submitQuestion,
 } from '../services/quiz';
@@ -67,6 +68,19 @@ router.post(
 			const { question, quiz_id, answer, session_id } =
 				req.body as SubmitAnswer;
 			const result = submitQuestion({ question, quiz_id, answer, session_id });
+			res.status(200).json({ success: true, result });
+		});
+	}
+);
+
+router.get(
+	'/:quizId/:sessionId',
+	(req: Request, res: Response, next: NextFunction): void => {
+		routeHandler(req, res, next, (req, res) => {
+			const result = getQuizResult({
+				quiz_id: req.params.quizId,
+				session_id: req.params.sessionId,
+			});
 			res.status(200).json({ success: true, result });
 		});
 	}

@@ -1,4 +1,6 @@
 import Result from '../models/result';
+import { ErrorEnum } from '../types/enums';
+import { ResultDataType } from '../types/result';
 import { SubmitAnswer } from '../validation/submitAnswer';
 
 export function isQuestionAlreadySubmitted({
@@ -16,4 +18,15 @@ export function isQuestionAlreadySubmitted({
 	}
 
 	return false;
+}
+
+export function getResultData(id: string): ResultDataType[] {
+	const resultData = Result.getOne(id);
+	if (!resultData) {
+		throw {
+			type: ErrorEnum.NOT_FOUND,
+			message: 'Quiz Session Not Found',
+		};
+	}
+	return resultData;
 }

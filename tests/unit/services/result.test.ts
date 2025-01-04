@@ -2,6 +2,7 @@ import * as ResultService from '../../../src/services/result';
 import Quiz from '../../../src/models/quiz';
 import { v4 as uuidv4 } from 'uuid';
 import Result from '../../../src/models/result';
+import { ErrorEnum } from '../../../src/types/enums';
 
 afterEach(() => {
 	jest.clearAllMocks();
@@ -149,6 +150,47 @@ describe('Result Service', () => {
 			const response = ResultService.isQuestionAlreadySubmitted(payload);
 
 			expect(response).toBe(false);
+		});
+	});
+
+	describe('getResultData', () => {
+		test('It should get result data based on id', () => {
+			const resultData = [
+				{
+					quiz_id: uuidv4(),
+					question: 'How do you write a conditional statement in JavaScript?',
+					answer: 'if i = 4 then { ... }',
+				},
+			];
+			const session_id = '1';
+			jest
+				.spyOn(Result, 'getAll')
+				.mockReturnValue(new Map().set(session_id, resultData));
+
+			const response = ResultService.getResultData(session_id);
+
+			expect(response).toEqual(resultData);
+		});
+
+		test('It should throw error if id doesnt exist', () => {
+			const resultData = [
+				{
+					quiz_id: uuidv4(),
+					question: 'How do you write a conditional statement in JavaScript?',
+					answer: 'if i = 4 then { ... }',
+				},
+			];
+			const session_id = '1';
+			jest
+				.spyOn(Result, 'getAll')
+				.mockReturnValue(new Map().set(session_id, resultData));
+
+			expect(() => ResultService.getResultData('2')).toThrow(
+				expect.objectContaining({
+					type: ErrorEnum.NOT_FOUND,
+					message: 'Quiz Session Not Found',
+				})
+			);
 		});
 	});
 });

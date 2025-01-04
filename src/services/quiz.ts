@@ -2,6 +2,8 @@ import Quiz from '../models/quiz';
 import Result from '../models/result';
 import { ErrorEnum } from '../types/enums';
 import {
+	GetQuizResultPayloadType,
+	GetQuizResultResponseType,
 	GetQuizType,
 	QuestionType,
 	QuizDataType,
@@ -9,7 +11,7 @@ import {
 } from '../types/quiz';
 import { CreateQuiz } from '../validation/createQuiz';
 import { SubmitAnswer } from '../validation/submitAnswer';
-import { isQuestionAlreadySubmitted } from './result';
+import { getResultData, isQuestionAlreadySubmitted } from './result';
 
 export function createQuiz({ title, questions }: CreateQuiz): QuizDataType {
 	const quizMap = Quiz.getAll();
@@ -83,6 +85,49 @@ export function submitQuestion(
 		response.correct_answer = correct_answer;
 	}
 	return response;
+}
+
+export function getQuizResult(
+	payload: GetQuizResultPayloadType
+): GetQuizResultResponseType {
+	const quiz = getQuiz(payload.quiz_id);
+	const resultData = getResultData(payload.session_id);
+
+	if (quiz.questions.length !== resultData.length) {
+		throw {
+			type: ErrorEnum.UNPROCESSABLE_ENTITY,
+			message: 'Submit all quiz questions to get result data',
+		};
+	}
+
+	const total = resultData.length;
+	let correct = 0;
+	const result: GetQuizResultResponseType['result'] = [];
+	const questionAnswerMap: Map<string, string> = new Map();
+	quiz.questions.forEach((questionData) => {
+		questionAnswerMap.set(questionData.question, questionData.answer);
+	});
+
+	resultData.forEach((resultEntry) => {
+		let is_correct;
+		const correct_answer = questionAnswerMap.get(resultEntry.question)!;
+		if (correct_answer === resultEntry.answer) {
+			correct++;
+			is_correct = true;
+		} else {
+			is_correct = false;
+		}
+		const data: GetQuizResultResponseType['result'][number] = {
+			is_correct,
+			user_answer: resultEntry.answer,
+		};
+		if (!is_correct) {
+			data.correct_answer = correct_answer;
+		}
+		result.push(data);
+	});
+
+	return { total, correct, result };
 }
 
 function isQuestionValid(

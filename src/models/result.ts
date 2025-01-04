@@ -1,12 +1,5 @@
+import { ResultDataType, SessionResultDataType } from '../types/result';
 import { SubmitAnswer } from '../validation/submitAnswer';
-
-type ResultDataType = {
-	quiz_id: string;
-	question: string;
-	answer: string;
-};
-
-type SessionResultDataType = Map<string, ResultDataType[]>;
 
 class Result {
 	private resultMap: SessionResultDataType;
